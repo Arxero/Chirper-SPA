@@ -286,7 +286,7 @@ function deleteChirp(chirp) {
 
 function listDiscover() {
     showView('viewDiscover')
-    $('#userlist').empty()
+    $('#userlist div').remove()
 
     $.ajax({
         method: 'GET',
@@ -360,7 +360,10 @@ function showUser(user, userId) {
     showView('viewProfile')
     $('#userProfileStats').empty()
     loadUserPostField('viewProfile', 'userProfileStats', user)
-    let subscriptions = JSON.parse(sessionStorage.getItem('subscriptions'))
+    let subscriptions = []
+    if (sessionStorage.getItem('subscriptions') != 'undefined') {
+        subscriptions = JSON.parse(sessionStorage.getItem('subscriptions'))
+    }
     listUserChirps()
 
 
@@ -375,7 +378,11 @@ function showUser(user, userId) {
 
 function fallowUser() {
     let user = $('#viewProfile h2').first().text()
-    let subscriptions = JSON.parse(sessionStorage.getItem('subscriptions'))
+    let subscriptions = []
+    if (sessionStorage.getItem('subscriptions') != 'undefined') {
+        subscriptions = JSON.parse(sessionStorage.getItem('subscriptions'))
+    }
+
     if (!subscriptions.includes(user)) {
         subscriptions.push(user)
     }
