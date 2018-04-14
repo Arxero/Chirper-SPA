@@ -115,12 +115,16 @@ function calcTime(dateIsoFormat) {
 function listChirps() {
     $('#chirps article').remove()
     $('#chirps div').remove()
+
+    // $('#linkHome').off('click')
+    // setTimeout(() => $('#linkHome').on('click', listChirps), 1000) //to avoid multiple click
+
     let subs = ''
     if (sessionStorage.getItem('subscriptions') != 'undefined') {
         subs = JSON.parse(sessionStorage.getItem('subscriptions'))
         subs = subs.map(e => `"${e}"`);
     }
-    
+
     $.ajax({
         method: 'GET',
         url: BASE_URL + 'appdata/' + APP_KEY + `/chirps?query={"author":{"$in": [${subs}]}}&sort={"_kmd.ect": 1}`,
@@ -194,6 +198,7 @@ function loadUserPostField(usernameField, userStatsField, username) {
     countChirps(username)
     countFollowing(username)
     countFollowers(username)
+
     let chirps = sessionStorage.getItem('chirps')
     let following = sessionStorage.getItem('following')
     let followers = sessionStorage.getItem('followers')
@@ -285,6 +290,9 @@ function deleteChirp(chirp) {
 }
 
 function listDiscover() {
+    $('#linkDiscover').off('click')
+    setTimeout(() => $('#linkDiscover').on('click', listDiscover), 1000) //to avoid multiple click
+
     showView('viewDiscover')
     $('#userlist div').remove()
 
